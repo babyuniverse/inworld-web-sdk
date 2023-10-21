@@ -1,7 +1,7 @@
 import '../../mocks/window.mock';
 
 import { GrpcAudioRecorder } from '../../../src/components/sound/grpc_audio.recorder';
-import { setTimeoutMock } from '../../helpers';
+import { timerMock } from '../../helpers';
 
 const timeoutMockCalls = (timeout: any) =>
   timeout.mock.calls.filter((ctx: any) => ctx[1] !== 0).length;
@@ -17,7 +17,7 @@ beforeEach(() => {
 test('should start convertion', () => {
   const setInterval = jest
     .spyOn(global, 'setInterval')
-    .mockImplementationOnce(setTimeoutMock);
+    .mockImplementationOnce(timerMock);
 
   recorder.startConvertion(new MediaStream(), jest.fn());
 

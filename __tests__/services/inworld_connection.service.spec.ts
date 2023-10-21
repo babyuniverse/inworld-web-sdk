@@ -28,7 +28,7 @@ import {
   generateSessionToken,
   getPacketId,
   setNavigatorProperty,
-  setTimeoutMock,
+  timerMock,
   writeMock,
 } from '../helpers';
 
@@ -518,7 +518,7 @@ describe('listener', () => {
     jest
       .spyOn(HTMLMediaElement.prototype, 'play')
       .mockImplementation(jest.fn());
-    jest.spyOn(global, 'setInterval').mockImplementationOnce(setTimeoutMock);
+    jest.spyOn(global, 'setInterval').mockImplementation(timerMock);
   });
 
   test('should send audio session start af first for inactive connection', async () => {
@@ -546,7 +546,7 @@ describe('listener', () => {
     expect(sendAudio).toHaveBeenCalledTimes(1);
   });
 
-  test('should send audio session start af first for inactive connection', async () => {
+  test("shouldn't send audio session start af first for active connection", async () => {
     jest
       .spyOn(ConnectionService.prototype, 'isActive')
       .mockImplementationOnce(() => true);

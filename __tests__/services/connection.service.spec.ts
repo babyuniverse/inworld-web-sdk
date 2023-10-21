@@ -616,6 +616,7 @@ describe('send', () => {
     const write = jest
       .spyOn(WebSocketConnection.prototype, 'write')
       .mockImplementationOnce(writeMock);
+
     const wsOpen = jest
       .spyOn(WebSocketConnection.prototype, 'open')
       .mockImplementationOnce(jest.fn());

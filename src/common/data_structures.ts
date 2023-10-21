@@ -51,10 +51,21 @@ export interface StopAudioPlayback {
   ticks: number;
 }
 
+export interface sessionContunuationConfig {
+  storage?: {
+    setItem: (value: string) => Awaitable<void>;
+    getItem: () => Awaitable<string>;
+  };
+  interval?: number;
+  attemptsInterval?: number;
+  maxAttempts?: number;
+}
+
 export interface ConnectionConfig {
   autoReconnect?: boolean;
   disconnectTimeout?: number;
   gateway?: Gateway;
+  sessionContunuation?: sessionContunuationConfig;
 }
 
 export interface HistoryConfig {
@@ -95,6 +106,7 @@ export enum ConnectionState {
   LOADED = 'LOADED',
   LOADING = 'LOADING',
   INACTIVE = 'INACTIVE',
+  RECONNECTING = 'RECONNECTING',
 }
 
 export enum AudioSessionState {
@@ -114,4 +126,10 @@ export interface Extension<InworldPacketT, HistoryItemT> {
   beforeLoadScene?: (request: LoadSceneRequest) => LoadSceneRequest;
   afterLoadScene?: (res: LoadSceneResponse) => void;
   historyItem?: (packet: InworldPacketT, item: HistoryItem) => HistoryItemT;
+}
+
+export interface InworldError {
+  code?: number;
+  message: string;
+  details?: string[];
 }

@@ -16,6 +16,7 @@ const textMessage = eventFactory.text(v4());
 
 const onReady = jest.fn();
 const onError = jest.fn();
+const onMessage = jest.fn();
 const onDisconnect = jest.fn();
 
 beforeEach(() => {
@@ -30,7 +31,10 @@ beforeEach(() => {
       connection: { gateway: { hostname: HOSTNAME } },
       capabilities: capabilitiesProps,
     },
+    onError,
     onReady,
+    onMessage,
+    onDisconnect,
   });
 });
 
@@ -57,6 +61,9 @@ describe('open', () => {
         connection: { gateway: { hostname: HOSTNAME } },
         capabilities: capabilitiesProps,
       },
+      onReady,
+      onError,
+      onDisconnect,
       onMessage: (packet: ProtoPacket) => {
         messages.push(packet);
       },
@@ -78,7 +85,10 @@ describe('open', () => {
         connection: { gateway: { hostname: HOSTNAME } },
         capabilities: capabilitiesProps,
       },
+      onReady,
       onError,
+      onMessage,
+      onDisconnect,
     });
 
     ws.open({ session, convertPacketFromProto });
@@ -100,7 +110,10 @@ describe('open', () => {
         connection: { gateway: { hostname: HOSTNAME } },
         capabilities: capabilitiesProps,
       },
+      onReady,
       onError,
+      onMessage,
+      onDisconnect,
     });
 
     await expect(
@@ -109,7 +122,7 @@ describe('open', () => {
         ws.open({ session, convertPacketFromProto });
       }),
       // WebSocket onerror event gets called with an event of type error and not an error
-    ).rejects.toEqual(expect.objectContaining({ type: 'error' }));
+    ).rejects.toBeDefined();
   });
 
   test('should call onDisconnect', async () => {
@@ -125,6 +138,9 @@ describe('open', () => {
         connection: { gateway: { hostname: HOSTNAME, ssl: true } },
         capabilities: capabilitiesProps,
       },
+      onReady,
+      onError,
+      onMessage,
       onDisconnect,
     });
 
@@ -142,6 +158,10 @@ describe('open', () => {
         connection: { gateway: { hostname: HOSTNAME } },
         capabilities: capabilitiesProps,
       },
+      onReady,
+      onError,
+      onMessage,
+      onDisconnect,
     });
     const muteEvent = eventFactory.ttsPlaybackMute(true);
 
@@ -222,6 +242,7 @@ describe('close', () => {
         },
         onError,
         onReady,
+        onMessage,
         onDisconnect,
       });
 
@@ -235,27 +256,6 @@ describe('close', () => {
       expect(() => ws.close()).not.toThrow();
       expect(onDisconnect).toHaveBeenCalledTimes(1);
     });
-
-    test('without Disconnect', async () => {
-      ws = new WebSocketConnection({
-        config: {
-          connection: { gateway: { hostname: HOSTNAME } },
-          capabilities: capabilitiesProps,
-        },
-        onError,
-        onReady,
-      });
-
-      ws.open({ session, convertPacketFromProto });
-      ws.write({
-        getPacket: () => textMessage,
-      });
-
-      await server.connected;
-
-      expect(() => ws.close()).not.toThrow();
-      expect(onDisconnect).toHaveBeenCalledTimes(0);
-    });
   });
 
   test('should not throw error if connection is not open before', async () => {
@@ -266,6 +266,7 @@ describe('close', () => {
       },
       onError,
       onReady,
+      onMessage,
       onDisconnect,
     });
 

@@ -153,7 +153,7 @@ export const setNavigatorProperty = (key: string, value: any) => {
   });
 };
 
-export const setTimeoutMock = (callback: any) => {
+export const timerMock = (callback: any) => {
   if (typeof callback === 'function') {
     callback();
   }
