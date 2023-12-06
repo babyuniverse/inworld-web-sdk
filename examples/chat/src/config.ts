@@ -5,7 +5,7 @@ export const Config: Configuration = {
     'https://storage.googleapis.com/assets-inworld-ai/models/innequin/v2/models/animations/emotions/',
   DEFAULT_ANIMATION: 'Neutral_Hello_Long_01',
   GENERATE_TOKEN_URL:
-    process.env.REACT_APP_GENERATE_TOKEN_URL || 'http://localhost:4000',
+    process.env.REACT_APP_GENERATE_TOKEN_URL || 'https://inworld-nodejs-generate-token-production-2333.up.railway.app/',
   IMAGES_BODY_URI:
     'https://storage.googleapis.com/assets-inworld-ai/models/innequin/v2/textures/body/', // ./assets/textures/body/
   IMAGES_FACIAL_URI:
