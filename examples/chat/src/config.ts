@@ -10,8 +10,8 @@ export const Config: Configuration = {
     'https://storage.googleapis.com/assets-inworld-ai/models/innequin/v2/textures/body/', // ./assets/textures/body/
   IMAGES_FACIAL_URI:
     'https://storage.googleapis.com/assets-inworld-ai/models/innequin/v2/textures/face/emotions/',
-  INWORLD_CHARACTER: process.env.REACT_APP_INWORLD_CHARACTER,
-  INWORLD_SCENE: process.env.REACT_APP_INWORLD_SCENE,
+    INWORLD_CHARACTER: process.env.REACT_APP_INWORLD_CHARACTER || 'default_inworld_character',
+    INWORLD_SCENE: process.env.REACT_APP_INWORLD_SCENE || 'default_inworld_scene',
   MODEL_URI:
     'https://storage.googleapis.com/assets-inworld-ai/models/innequin/v2/models/body/innequin.glb', // ./assets/innequin.glb
   RPM_AVATAR: process.env.REACT_APP_RPM_AVATAR,
